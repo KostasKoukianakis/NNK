@@ -567,19 +567,13 @@ p {
 }
 
 .cta-lines-svg .cta-cap {
-  font-size: 12px;
-  letter-spacing: 0.06em;
+  font-size: 28px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   fill: #d45d4f;
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-weight: 500;
-  line-height: 1;
-}
-
-.cta-box--eager .cta-lines-svg .cta-cap {
-  font-size: 28px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  line-height: 1;
 }
 
 @media (max-width: 991px) {
@@ -611,13 +605,9 @@ p {
   }
 
   .cta-lines-svg .cta-cap {
-    font-size: 14px;
-    letter-spacing: 0.07em;
-  }
-
-  .cta-box--eager .cta-lines-svg .cta-cap {
     font-size: 22px;
     font-weight: 700;
+    letter-spacing: 0.04em;
   }
 }
 
@@ -646,13 +636,6 @@ p {
   .cta-lines-svg .cta-cap--2,
   .cta-lines-svg .cta-cap--3,
   .cta-lines-svg .cta-cap--4 {
-    display: none;
-  }
-
-  .cta-box--eager .cta-lines-svg .cta-cap--1,
-  .cta-box--eager .cta-lines-svg .cta-cap--2,
-  .cta-box--eager .cta-lines-svg .cta-cap--3,
-  .cta-box--eager .cta-lines-svg .cta-cap--4 {
     display: inline;
     font-size: 16px;
     font-weight: 700;

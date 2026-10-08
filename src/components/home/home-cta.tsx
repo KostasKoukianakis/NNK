@@ -296,7 +296,7 @@ export function HomeCta({ eager = false }: { eager?: boolean }) {
               pointerEvents="none"
               fill={CAPTION_CORAL}
               fontFamily="var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace"
-              fontWeight={400}
+              fontWeight={700}
             >
               {CAPTIONS.map((cap) => (
                 <text
