@@ -270,7 +270,7 @@ export function StringsNet() {
   return (
     <div
       ref={wrapRef}
-      className="pointer-events-none absolute inset-x-0 top-0 z-0 h-dvh overflow-hidden bg-[var(--blue)]"
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-[var(--blue)]"
       aria-hidden="true"
     >
       <canvas ref={canvasRef} className="block size-full" />

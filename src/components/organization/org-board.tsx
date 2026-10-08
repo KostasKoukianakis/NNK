@@ -50,16 +50,16 @@ export function OrgBoard({ root }: { root: OrgNode }) {
             transition={{ duration: reduceMotion ? 0.15 : 0.45, ease }}
             className="absolute inset-0 flex flex-col text-white"
           >
-            <div className="grid shrink-0 gap-8 sm:grid-cols-[10.5rem_minmax(0,1fr)] sm:items-end">
+            <div className="grid shrink-0 gap-6 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center">
               {node.image ? (
                 <img
                   src={node.image}
                   alt={node.imageAlt || node.name || node.title}
-                  className="aspect-[4/5] w-full max-w-[10.5rem] object-cover object-top"
+                  className="size-36 rounded-full object-cover object-top sm:size-40"
                 />
               ) : (
-                <div className="flex aspect-[4/5] w-full max-w-[10.5rem] items-center justify-center bg-white/10 text-white/70">
-                  <UserRound className="size-14" strokeWidth={1.15} aria-hidden="true" />
+                <div className="flex size-36 items-center justify-center rounded-full bg-white/10 text-white/70 sm:size-40">
+                  <UserRound className="size-16" strokeWidth={1.15} aria-hidden="true" />
                 </div>
               )}
               <div>
@@ -75,7 +75,7 @@ export function OrgBoard({ root }: { root: OrgNode }) {
               </div>
             </div>
             <div className="mt-8 min-h-0 flex-1 overflow-y-auto pr-2 [scrollbar-color:rgba(255,255,255,0.45)_transparent]">
-              <p className="text-[clamp(1.35rem,2.2vw,2rem)] font-medium leading-snug">{node.bio}</p>
+              <p className="whitespace-pre-line text-[clamp(1.15rem,1.7vw,1.45rem)] font-medium leading-relaxed">{node.bio}</p>
             </div>
           </motion.article>
         </AnimatePresence>
