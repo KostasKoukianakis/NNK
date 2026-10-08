@@ -52,7 +52,7 @@ function pathLen(el: SVGPathElement) {
   }
 }
 
-export function HomeCta() {
+export function HomeCta({ eager = false }: { eager?: boolean }) {
   const rootRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
 
@@ -79,8 +79,8 @@ export function HomeCta() {
       function showCaptions() {
         gsap.to(caps, {
           opacity: 1,
-          duration: 0.55,
-          stagger: 0.1,
+          duration: eager ? 0.28 : 0.55,
+          stagger: eager ? 0.04 : 0.1,
           ease: "power2.out",
         });
       }
@@ -119,24 +119,29 @@ export function HomeCta() {
           p.style.strokeDashoffset = String(len);
         });
 
+        const draw = eager ? 0.95 : 2.75;
+        const stagger = eager ? 0.05 : 0.18;
+
         const tl = gsap.timeline({
           onComplete: () => {
             basePaths.forEach((p) => {
               p.style.strokeDasharray = "";
               p.style.strokeDashoffset = "";
             });
-            showCaptions();
+            if (!eager) showCaptions();
             startPulseLoops();
           },
         });
+
+        if (eager) tl.call(showCaptions, undefined, 0.12);
 
         basePaths.forEach((p, i) => {
           const len = pathLen(p);
           if (!len) return;
           tl.to(
             p,
-            { strokeDashoffset: 0, duration: 2.75, ease: "power2.inOut" },
-            i * 0.18,
+            { strokeDashoffset: 0, duration: draw, ease: "power2.inOut" },
+            i * stagger,
           );
         });
       }
@@ -160,10 +165,14 @@ export function HomeCta() {
     }, root);
 
     return () => ctx.revert();
-  }, [reduceMotion]);
+  }, [reduceMotion, eager]);
 
   return (
-    <section id="cta" ref={rootRef} className="cta-box bg-white text-[var(--blue)]">
+    <section
+      id="cta"
+      ref={rootRef}
+      className={`cta-box bg-white text-[var(--blue)]${eager ? " cta-box--eager" : ""}`}
+    >
       <div className="wrapper-cta">
         <div className="flex-cta relative z-[2]">
           <div className="tagline-cta">

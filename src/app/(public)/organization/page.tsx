@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HomeCta } from "@/components/home/home-cta";
 import { OrgBoard } from "@/components/organization/org-board";
 import { PixelTransition } from "@/components/visual/pixel-transition";
 import { StringsNet } from "@/components/visual/strings-net";
@@ -84,6 +85,8 @@ export default function OrganizationPage() {
           </p>
         </div>
       </section>
+
+      <HomeCta eager />
     </>
   );
 }
