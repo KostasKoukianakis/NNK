@@ -77,6 +77,7 @@ export function SiteHeader() {
   const emergency = HOSPITAL.phones.emergency[0];
   const organosi = MENU.find((item) => item.slug === "organosi");
   const isHome = pathname === "/";
+  const isOrganogram = pathname === "/organization";
 
   useEffect(() => {
     setMobileOpen(false);
@@ -84,9 +85,14 @@ export function SiteHeader() {
   }, [pathname]);
 
   return (
-    <header className={cn("site-chrome z-40 text-white", isHome ? "fixed inset-x-0 top-0" : "sticky top-0")}>
+    <header
+      className={cn(
+        "site-chrome z-40 text-white",
+        isHome || isOrganogram ? "fixed inset-x-0 top-0" : "sticky top-0",
+      )}
+    >
       {!isHome ? (
-        <div className="border-b border-white/10 bg-[var(--blue)]/70 backdrop-blur-md">
+        <div className={cn(!isOrganogram && "border-b border-white/10 bg-[var(--blue)]/70 backdrop-blur-md")}>
           <div className={cn(PAGE_WIDTH, "flex flex-wrap items-center justify-between gap-2 py-[0.5em] text-[0.7em]")}>
             <p className="font-mono uppercase tracking-[0.08em] text-white/65">
               {HOSPITAL.addressLine} · {HOSPITAL.secretariatHours}
