@@ -24,8 +24,8 @@ export default function OrganizationPage() {
       <p className="font-mono text-xs uppercase tracking-[0.08em] text-white/55">Οργάνωση</p>
       <h1 className="mt-3 text-5xl">Οργανόγραμμα</h1>
       <p className="mt-4 max-w-2xl text-lg text-white/80">
-        Η δομή του νοσοκομείου, από τον διοικητή προς τις διευθύνσεις. Η οργάνωση κάθε
-        κόμβου ανοίγει από κάτω του, μέσα στο πλάτος της οθόνης.
+        Διευθυντής, υποδιευθυντής και διευθύνσεις του νοσοκομείου. Ο βαθμός, το
+        ονοματεπώνυμο και η φωτογραφία κάθε θέσης συμπληρώνονται στο οργανόγραμμα.
       </p>
 
       <div className="mt-10 overflow-x-clip rounded-2xl bg-[#f3f6fb] px-3 py-8 sm:px-6">

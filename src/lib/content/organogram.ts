@@ -1,5 +1,3 @@
-import { MENU, type MenuNode } from "@/lib/content/site-map";
-
 export type OrgNode = {
   id: string;
   title: string;
@@ -13,63 +11,79 @@ export type OrgNode = {
 };
 
 /**
- * Φωτογραφίες και στοιχεία προσώπων.
+ * Φωτογραφίες, βαθμός και ονοματεπώνυμο.
  * Βάλε το αρχείο στο public/organogram/ και συμπλήρωσε τη διαδρομή εδώ.
- * Το id είναι το μονοπάτι του κόμβου (π.χ. "organosi/iatrikh") ή "nnk" / "dioikitis".
  *
- * dioikitis: {
- *   image: "/organogram/dioikitis.jpg",
- *   imageAlt: "Ο διοικητής του ΝΝΚ",
+ * diefthyntis: {
+ *   image: "/organogram/diefthyntis.jpg",
+ *   imageAlt: "Ο διευθυντής του ΝΝΚ",
  *   subtitle: "Πλοίαρχος (ΥΙ)\nΟΝΟΜΑΤΕΠΩΝΥΜΟ ΠΝ",
  * },
  */
 export const ORGANOGRAM_MEDIA: Record<
   string,
   { image?: string; imageAlt?: string; subtitle?: string }
-> = {
-  nnk: { subtitle: "Σούδα, Χανιά" },
-  dioikitis: { subtitle: "Υπάγεται στον Αρχηγό ΓΕΝ" },
+> = {};
+
+const LEADERSHIP: OrgNode = {
+  id: "diefthyntis",
+  title: "Διευθυντής ΝΝΚ",
+  subtitle: "Υπάγεται στον Αρχηγό ΓΕΝ",
+  portrait: true,
+  children: [
+    {
+      id: "ypodiefthyntis",
+      title: "Υποδιευθυντής",
+      subtitle: "Συντονιστής διοικητικού",
+      portrait: true,
+      children: [
+        {
+          id: "ddy",
+          title: "ΔΔΥ",
+          subtitle: "Διεύθυνση Διοικητικής Υπηρεσίας",
+          portrait: true,
+        },
+        {
+          id: "dou",
+          title: "ΔΟΥ",
+          subtitle: "Διεύθυνση Οικονομικής Υπηρεσίας",
+          portrait: true,
+        },
+        {
+          id: "dfy",
+          title: "ΔΦΥ",
+          subtitle: "Διεύθυνση Φαρμακευτικής Υπηρεσίας",
+          portrait: true,
+        },
+      ],
+    },
+    {
+      id: "diy",
+      title: "ΔΙΥ",
+      subtitle: "Διεύθυνση Ιατρικής Υπηρεσίας",
+      portrait: true,
+    },
+    {
+      id: "dny",
+      title: "ΔΝΥ",
+      subtitle: "Διεύθυνση Νοσηλευτικής Υπηρεσίας",
+      portrait: true,
+    },
+  ],
 };
 
-function fromMenu(node: MenuNode, depth: number): OrgNode {
-  const id = node.path.join("/");
-  const media = ORGANOGRAM_MEDIA[id];
-  const children = node.children.map((child) => fromMenu(child, depth + 1));
-  const image = media?.image;
-
+function withMedia(node: OrgNode): OrgNode {
+  const media = ORGANOGRAM_MEDIA[node.id];
   return {
-    id,
-    title: node.title,
-    subtitle: media?.subtitle,
-    image,
-    imageAlt: media?.imageAlt,
-    href: node.url,
-    portrait: Boolean(image) || depth <= 2,
-    children: children.length > 0 ? children : undefined,
+    ...node,
+    image: media?.image ?? node.image,
+    imageAlt: media?.imageAlt ?? node.imageAlt,
+    subtitle: media?.subtitle ?? node.subtitle,
+    portrait: true,
+    children: node.children?.map(withMedia),
   };
 }
 
 export function buildOrganogram(): OrgNode {
-  const organosi = MENU.find((item) => item.slug === "organosi");
-  const media = ORGANOGRAM_MEDIA.dioikitis;
-
-  return {
-    id: "nnk",
-    title: "Ναυτικό Νοσοκομείο Κρήτης",
-    subtitle: ORGANOGRAM_MEDIA.nnk?.subtitle,
-    image: ORGANOGRAM_MEDIA.nnk?.image,
-    imageAlt: ORGANOGRAM_MEDIA.nnk?.imageAlt,
-    portrait: true,
-    children: [
-      {
-        id: "dioikitis",
-        title: "Διοικητής",
-        subtitle: media?.subtitle,
-        image: media?.image,
-        imageAlt: media?.imageAlt,
-        portrait: true,
-        children: organosi?.children.map((child) => fromMenu(child, 2)) ?? [],
-      },
-    ],
-  };
+  return withMedia(LEADERSHIP);
 }

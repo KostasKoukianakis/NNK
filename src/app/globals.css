@@ -109,7 +109,6 @@ p {
 }
 
 .nav-pill {
-  display: flex;
   align-items: stretch;
   gap: 0.25em;
   height: auto;
@@ -1209,10 +1208,10 @@ p {
 
 .org-row-line > .org-slot {
   position: relative;
-  width: 10.25rem;
+  width: max-content;
   max-width: none;
   flex: 0 0 auto;
-  padding: 1.15rem 0.35rem 0;
+  padding: 1.15rem 0.4rem 0;
 }
 
 .org-row-line > .org-slot::before,
@@ -1251,5 +1250,68 @@ p {
 .org-row-line > .org-slot:last-child::before {
   border-top: 1px solid #1d4f91;
   border-right: 1px solid #1d4f91;
+}
+
+/* Narrow screens: indented column so each post stays readable. */
+@media (max-width: 719px) {
+  .org-branch,
+  .org-children {
+    align-items: flex-start;
+  }
+
+  .org-stem {
+    display: none;
+  }
+
+  .org-row-line {
+    flex-direction: column;
+    align-items: stretch;
+    width: max-content;
+    max-width: 100%;
+    margin-left: 0.35rem;
+  }
+
+  .org-row-line > .org-slot {
+    width: auto;
+    max-width: 100%;
+    align-items: flex-start;
+    padding: 0.7rem 0 0 1.15rem;
+  }
+
+  .org-row-line > .org-slot::before,
+  .org-row-line > .org-slot:first-child::before,
+  .org-row-line > .org-slot:only-child::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: auto;
+    border: 0;
+    border-left: 1px solid #1d4f91;
+  }
+
+  .org-row-line > .org-slot:last-child::before {
+    bottom: auto;
+    height: 6.5rem;
+  }
+
+  .org-row-line > .org-slot::after,
+  .org-row-line > .org-slot:last-child::after,
+  .org-row-line > .org-slot:only-child::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 6.5rem;
+    right: auto;
+    left: 0;
+    width: 1.15rem;
+    height: 0;
+    border: 0;
+    border-top: 1px solid #1d4f91;
+  }
 }
 
