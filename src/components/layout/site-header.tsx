@@ -77,7 +77,7 @@ export function SiteHeader() {
   const emergency = HOSPITAL.phones.emergency[0];
   const organosi = MENU.find((item) => item.slug === "organosi");
   const isHome = pathname === "/";
-  const isOrganogram = pathname === "/organization";
+  const isOrganogram = pathname === "/organization" || pathname.startsWith("/organization/");
 
   useEffect(() => {
     setMobileOpen(false);

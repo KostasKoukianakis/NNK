@@ -117,3 +117,25 @@ function withMedia(node: OrgNode): OrgNode {
 export function buildOrganogram(): OrgNode {
   return withMedia(LEADERSHIP);
 }
+
+export function listOrgIds(node: OrgNode = LEADERSHIP): string[] {
+  return [node.id, ...(node.children ?? []).flatMap((child) => listOrgIds(child))];
+}
+
+export function findOrgNode(id: string, node: OrgNode = buildOrganogram()): OrgNode | null {
+  if (node.id === id) return node;
+  for (const child of node.children ?? []) {
+    const found = findOrgNode(id, child);
+    if (found) return found;
+  }
+  return null;
+}
+
+export function orgPath(id: string, node: OrgNode = buildOrganogram()): string[] {
+  if (node.id === id) return [node.id];
+  for (const child of node.children ?? []) {
+    const below = orgPath(id, child);
+    if (below.length > 0) return [node.id, ...below];
+  }
+  return [];
+}

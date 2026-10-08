@@ -28,7 +28,7 @@ export default function OrganizationPage() {
       <h1 className="mt-3 text-5xl">Οργανόγραμμα</h1>
       <p className="mt-4 max-w-2xl text-lg text-white/80">
         Διευθυντής, υποδιευθυντής και διευθύνσεις του νοσοκομείου. Πάτησε μια κάρτα
-        για τη φωτογραφία και τα στοιχεία της θέσης.
+        για να ανοίξεις τη θέση και να περάσεις σε άλλο στέλεχος από το δέντρο.
       </p>
 
       <div className="mt-10 overflow-x-clip rounded-2xl bg-[#f3f6fb] px-3 py-8 sm:px-6">
