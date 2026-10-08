@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { OrgTree } from "@/components/organization/org-tree";
+import { StringsNet } from "@/components/visual/strings-net";
 import { buildOrganogram } from "@/lib/content/organogram";
 
 export const metadata: Metadata = {
@@ -20,7 +21,9 @@ export default function OrganizationPage() {
   const tree = buildOrganogram();
 
   return (
-    <div className="mx-auto w-full max-w-[92rem] overflow-x-clip px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
+    <div className="relative overflow-x-clip">
+      <StringsNet />
+      <div className="relative z-10 mx-auto w-full max-w-[92rem] overflow-x-clip px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
       <p className="font-mono text-xs uppercase tracking-[0.08em] text-white/55">Οργάνωση</p>
       <h1 className="mt-3 text-5xl">Οργανόγραμμα</h1>
       <p className="mt-4 max-w-2xl text-lg text-white/80">
@@ -47,6 +50,7 @@ export default function OrganizationPage() {
           </Link>
         </p>
       </section>
+      </div>
     </div>
   );
 }
