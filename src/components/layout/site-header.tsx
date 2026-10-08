@@ -105,17 +105,16 @@ export function SiteHeader() {
         <div
           className={cn(
             FULL_BLEED,
-            "site-chrome-inner flex items-center justify-between gap-x-[0.75em]",
-            "xl:grid xl:grid-cols-[minmax(0,auto)_minmax(0,1fr)_minmax(0,auto)] xl:items-center",
+            "site-chrome-inner relative flex items-center justify-between gap-x-[0.75em]",
           )}
         >
-          <Link href="/" className="min-w-0 justify-self-start">
+          <Link href="/" className="relative z-20 min-w-0 shrink-0">
             <SiteMark />
           </Link>
 
           <nav
             aria-label="Κύρια πλοήγηση"
-            className="nav-pill hidden min-w-0 justify-self-center xl:flex"
+            className="nav-pill absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 xl:flex"
           >
             {PILL.map((item) => (
               <Link
@@ -138,7 +137,7 @@ export function SiteHeader() {
             </button>
           </nav>
 
-          <div className="nav-pill nav-pill-right hidden justify-self-end xl:flex">
+          <div className="nav-pill nav-pill-right relative z-20 hidden shrink-0 xl:flex">
             <Link className="nav-pill-link" href="/contact">
               Επικοινωνία
             </Link>
