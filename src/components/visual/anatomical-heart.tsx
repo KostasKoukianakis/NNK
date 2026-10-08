@@ -160,7 +160,7 @@ function pointLineDistanceWithT(px: number, py: number, x1: number, y1: number, 
   return { d: Math.hypot(px - sx, py - sy), t };
 }
 
-/** Same density as before the center-radial rewrite. */
+/** Outline dots and filaments are spaced out so the hero stays light while scrolling. */
 function buildCloud(): { particles: Particle[]; filaments: Filament[]; outerIdx: number[]; maxR: number } {
   const ns = "http://www.w3.org/2000/svg";
   const svg = document.createElementNS(ns, "svg");
@@ -171,7 +171,8 @@ function buildCloud(): { particles: Particle[]; filaments: Filament[]; outerIdx:
     el.setAttribute("d", def.d);
     svg.appendChild(el);
     const len = el.getTotalLength();
-    const step = def.o ? 10 : 16;
+    // Outer rim was sampled every 10px and read as a solid edge. Inner paths stay a bit denser.
+    const step = def.o ? 18 : 22;
     for (let l = 0; l < len; l += step) {
       const q = el.getPointAtLength(l);
       skeleton.push({ px: q.x, py: q.y, outer: def.o === 1 });
@@ -199,14 +200,14 @@ function buildCloud(): { particles: Particle[]; filaments: Filament[]; outerIdx:
   for (const p of skeleton) pushUnique(p.px, p.py, p.outer);
 
   for (let i = 0; i < skeleton.length; i++) {
-    if (Math.random() > 0.5) continue;
+    if (Math.random() > 0.22) continue;
     const p = skeleton[i];
     const a = Math.random() * Math.PI * 2;
     const r = Math.random() * (p.outer ? 12 : 20);
     pushUnique(p.px + Math.cos(a) * r, p.py + Math.sin(a) * r, false);
   }
 
-  for (let i = 0; i < 360; i++) {
+  for (let i = 0; i < 120; i++) {
     const a = skeleton[Math.floor(Math.random() * skeleton.length)];
     let b = a;
     for (let tries = 0; tries < 8; tries++) {
@@ -226,6 +227,31 @@ function buildCloud(): { particles: Particle[]; filaments: Filament[]; outerIdx:
       false,
     );
   }
+
+  // Parallel outline paths stack dots on top of each other. Keep the rim airy.
+  const outerMin2 = 14 * 14;
+  const keptOuter: Particle[] = [];
+  const thinned: Particle[] = [];
+  for (const p of particles) {
+    if (!p.outer) {
+      thinned.push(p);
+      continue;
+    }
+    let crowded = false;
+    for (const k of keptOuter) {
+      const dx = p.px - k.px;
+      const dy = p.py - k.py;
+      if (dx * dx + dy * dy < outerMin2) {
+        crowded = true;
+        break;
+      }
+    }
+    if (crowded) continue;
+    keptOuter.push(p);
+    thinned.push(p);
+  }
+  particles.length = 0;
+  particles.push(...thinned);
 
   let maxR = 1;
   for (const p of particles) {
@@ -253,6 +279,8 @@ function buildCloud(): { particles: Particle[]; filaments: Filament[]; outerIdx:
   const maxLink2 = maxLink * maxLink;
 
   for (let i = 0; i < n; i++) {
+    // Skip some dots entirely so strings thin out inside the heart and along the rim.
+    if (hash(i * 3.17 + 0.4) < 0.42) continue;
     const gx = Math.floor(particles[i].px / cell);
     const gy = Math.floor(particles[i].py / cell);
     const candidates: { j: number; d2: number }[] = [];
@@ -275,8 +303,10 @@ function buildCloud(): { particles: Particle[]; filaments: Filament[]; outerIdx:
 
     candidates.sort((a, b) => a.d2 - b.d2);
     let added = 0;
+    // One string per dot, inside and on the rim, instead of a dense mesh.
+    const maxLinks = 1;
     for (const c of candidates) {
-      if (added >= 3) break;
+      if (added >= maxLinks) break;
       const edgeKey = `${i}:${c.j}`;
       if (linked.has(edgeKey)) continue;
       linked.add(edgeKey);
