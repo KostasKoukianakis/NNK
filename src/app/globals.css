@@ -1172,6 +1172,21 @@ p {
   }
 }
 
+.org-profile {
+  width: min(58rem, calc(100vw - 1.5rem));
+  max-height: min(40rem, calc(100dvh - 1.5rem));
+  margin: auto;
+  overflow: auto;
+  border: 0;
+  padding: 0;
+  background: #fff;
+  color: #044ab3;
+}
+
+.org-profile::backdrop {
+  background: rgba(3, 22, 58, 0.55);
+}
+
 /* Organogram: branching tree that stays inside the viewport */
 .org-chart {
   overflow-x: clip;
