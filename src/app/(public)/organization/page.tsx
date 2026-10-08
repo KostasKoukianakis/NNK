@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { OrgTree, type OrgNode } from "@/components/organization/org-tree";
-import { MENU, type MenuNode } from "@/lib/content/site-map";
+import { OrgTree } from "@/components/organization/org-tree";
+import { buildOrganogram } from "@/lib/content/organogram";
 
 export const metadata: Metadata = {
   title: "Οργανόγραμμα",
@@ -16,46 +16,19 @@ const INFRASTRUCTURE = [
   "Δύο ασθενοφόρα, κινητές μονάδες.",
 ] as const;
 
-function fromMenu(node: MenuNode): OrgNode {
-  const children = node.children.map(fromMenu);
-  return {
-    id: node.path.join("/"),
-    title: node.title,
-    href: node.url,
-    children: children.length > 0 ? children : undefined,
-  };
-}
-
-function buildTree(): OrgNode {
-  const organosi = MENU.find((item) => item.slug === "organosi");
-  return {
-    id: "nnk",
-    title: "Ναυτικό Νοσοκομείο Κρήτης",
-    subtitle: "Σούδα, Χανιά",
-    children: [
-      {
-        id: "dioikitis",
-        title: "Διοικητής",
-        subtitle: "Υπάγεται στον Αρχηγό ΓΕΝ",
-        children: organosi?.children.map(fromMenu) ?? [],
-      },
-    ],
-  };
-}
-
 export default function OrganizationPage() {
-  const tree = buildTree();
+  const tree = buildOrganogram();
 
   return (
     <div className="mx-auto w-full max-w-[92rem] px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
       <p className="font-mono text-xs uppercase tracking-[0.08em] text-white/55">Οργάνωση</p>
       <h1 className="mt-3 text-5xl">Οργανόγραμμα</h1>
       <p className="mt-4 max-w-2xl text-lg text-white/80">
-        Η δομή του νοσοκομείου, από τον διοικητή προς τις διευθύνσεις. Η οργάνωση κάθε
-        διεύθυνσης ανοίγει με κλικ στο εικονίδιο.
+        Η δομή του νοσοκομείου, από τον διοικητή προς τις διευθύνσεις. Κάθε κόμβος ανοίγει
+        μόνο προς τα κάτω.
       </p>
 
-      <div className="mt-10 overflow-x-auto pb-2">
+      <div className="mt-10 rounded-2xl bg-[#f3f6fb] px-4 py-10 sm:px-8">
         <OrgTree root={tree} />
       </div>
 
