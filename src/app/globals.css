@@ -1,0 +1,1174 @@
+@import "tailwindcss";
+
+:root {
+  --blue: #044ab3;
+  --black: #151515;
+  --white: #ffffff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --muted-on-light: rgba(21, 21, 21, 0.62);
+  --dot: #ff6a2b;
+  --emergency: #ff4d3a;
+  --bg: var(--blue);
+  --ink: var(--white);
+  --surface: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.18);
+  --ring: #ffffff;
+  --primary: var(--white);
+  --primary-deep: #033a8f;
+  --primary-foreground: var(--blue);
+  --accent: var(--white);
+  --accent-foreground: var(--blue);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-source);
+  --font-mono: var(--font-mono);
+  --font-display: var(--font-source);
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--blue);
+  color: var(--white);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.28);
+  color: var(--white);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+}
+
+.wire-grid {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.22;
+}
+
+.wire-grid svg {
+  width: 100%;
+  height: 100%;
+}
+
+.label-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.label-dot::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--dot);
+  flex-shrink: 0;
+}
+
+.label-dot-dark {
+  color: rgba(21, 21, 21, 0.7);
+}
+
+.nav-pill {
+  display: flex;
+  align-items: stretch;
+  gap: 0.25em;
+  height: auto;
+  min-height: 2.8125em; /* ≈54px @ 19.2 — Cantor .menu */
+  border-radius: 0.25em;
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(7px);
+  border: none;
+  padding: 0.25em;
+}
+
+.nav-pill-right {
+  padding: 0.25em 0.375em 0.25em 0.25em;
+  margin-left: 0;
+}
+
+.nav-pill-link {
+  display: inline-flex;
+  height: auto;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.18em;
+  padding: 0.75em 0.85em;
+  font-size: 0.84em; /* 16.128px @ 19.2 — Cantor .link_header */
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 160ms var(--ease-out-expo), color 160ms var(--ease-out-expo);
+}
+
+.nav-pill-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-pill-link[data-active="true"] {
+  background: var(--white);
+  color: var(--blue);
+}
+
+/* Fluid header / hero root — same 1vw as cantor8.io body */
+.site-chrome {
+  font-size: 1vw; /* 19.2px @ 1920 */
+}
+
+.site-chrome-inner {
+  padding-top: 0.875em; /* 16.8px */
+  padding-bottom: 0.875em;
+}
+
+.site-mark-logo {
+  width: 2em;
+  height: 2em;
+}
+
+.site-mark-word {
+  font-size: 1.05em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.site-mark-sub {
+  font-size: 0.65em;
+  line-height: 1.2;
+  margin-top: 0.15em;
+}
+
+.hero-fluid {
+  font-size: 1vw; /* 19.2px @ 1920 */
+  letter-spacing: -0.01em;
+}
+
+.hero-h1 {
+  font-size: 3.9em; /* 74.88px — Cantor .h1 */
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: inherit; /* -0.192px from .hero-fluid, matches Cantor */
+}
+
+.hero-cta {
+  margin-top: 1.75em;
+  border-radius: 0.1875em;
+  padding: 0.25em 0.25em 0.25em 1em !important;
+  font-size: 0.95em; /* 18.24px — Cantor .button */
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  gap: 0.55em !important;
+  min-height: 0 !important;
+  height: auto;
+}
+
+.hero-cta > span:first-child {
+  padding-right: 0.25em;
+}
+
+.hero-cta > span:last-child {
+  width: 2.375em;
+  height: 2.375em;
+  border-radius: 0.1875em;
+}
+
+.nav-cta {
+  border-radius: 0.1875em;
+  padding: 0.15em 0.15em 0.15em 0.85em !important;
+  font-size: 0.84em;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  gap: 0.45em !important;
+  min-height: 0 !important;
+  height: auto;
+  align-self: stretch;
+}
+
+.nav-cta > span:last-child {
+  width: 2.375em;
+  height: 2.375em;
+  border-radius: 0.1875em;
+}
+
+.hero-scroll {
+  font-size: 0.7em;
+  letter-spacing: 0.14em;
+}
+
+@media (max-width: 991px) {
+  .site-chrome,
+  .hero-fluid {
+    font-size: clamp(14px, 2.8vw, 18px);
+  }
+
+  .hero-h1 {
+    font-size: clamp(2.75rem, 10vw, 3.9em);
+  }
+}
+
+@keyframes foundationCubeFlicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.foundation-cube {
+  animation: foundationCubeFlicker 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .foundation-cube {
+    animation: none;
+  }
+}
+
+/* Cantor8 partners grid — 6 columns with staggered row placement on desktop */
+.partners-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .partners-grid {
+    gap: 1em;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: auto auto auto;
+  }
+
+  .partners-grid-item {
+    grid-column: var(--partner-col);
+    grid-row: var(--partner-row);
+  }
+}
+
+/* Cantor8 pixel dither — blue → black scroll transition.
+   Height is set by JS (gridH + buffer) so the band never overlaps partners. */
+.transition-cubes {
+  position: relative;
+  z-index: 15;
+  min-height: 36em;
+  pointer-events: none;
+  background: var(--px-spacer, var(--px-from, transparent));
+}
+
+.pixel-transition {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--px-from, #044ab3);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.pixel-grid {
+  position: relative;
+  display: grid;
+  justify-content: start;
+  margin: 0;
+  line-height: 0;
+  font-size: 0;
+  background: var(--px-from, #044ab3);
+  gap: 0 !important;
+  transform: none !important;
+}
+
+.pixel {
+  display: block;
+  margin: 0 -1px -1px 0;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  position: relative;
+  box-sizing: border-box;
+  background-clip: border-box;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.pixel-transition.is-solid,
+.pixel-transition.is-solid .pixel-grid {
+  background: var(--px-solid, #151515) !important;
+}
+
+.pixel-transition.is-solid .pixel {
+  background: var(--px-solid, #151515) !important;
+  box-shadow: none !important;
+}
+
+/* Cantor8 Newsroom — home articles grid (fluid 1vw like Cantor body) */
+.newsroom-wrap {
+  font-size: 1vw; /* 19.2px @ 1920 — same scale as cantor8.io */
+}
+
+.newsroom-h2 {
+  width: auto;
+  max-width: 18ch;
+  font-size: 4.5em; /* 86.4px @ 1920 */
+  font-weight: 500;
+  line-height: 0.9;
+  color: var(--blue);
+}
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 2em 1em;
+}
+
+.article-item {
+  border-radius: 0.25em;
+  overflow: hidden;
+}
+
+.article-link {
+  background-color: rgba(4, 74, 179, 0.08);
+  padding: 1em 1em 1.45em;
+  color: var(--blue);
+}
+
+.article-link:hover {
+  background-color: rgba(4, 74, 179, 0.15);
+}
+
+.image-article {
+  height: 23em; /* Cantor .image_article */
+}
+
+.news-tag {
+  color: var(--blue);
+  letter-spacing: 0;
+  background-color: rgba(4, 74, 179, 0.1);
+  border-radius: 0.1875em;
+  padding: 0.63em 0.7em 0.6em;
+  font-size: 0.78em;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.article-title {
+  font-size: 1.4em; /* Cantor .article_title → 26.88px @ 1920 */
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+@media (max-width: 991px) {
+  .newsroom-wrap {
+    font-size: clamp(14px, 2.8vw, 18px);
+  }
+
+  .newsroom-h2 {
+    font-size: clamp(2.75rem, 10vw, 4rem);
+    max-width: none;
+  }
+
+  .articles-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5em;
+  }
+
+  .image-article {
+    height: 18em;
+  }
+}
+
+/* Cantor8 CTA — Let's Work (fluid 1vw like Cantor body) */
+.cta-box {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 125vh;
+  background-color: var(--white);
+  font-size: 1vw; /* 19.2px @ 1920 */
+  --cta-line-width: 1;
+}
+
+.wrapper-cta {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  padding: 6.5em 1.75rem 4em;
+}
+
+.flex-cta {
+  display: flex;
+}
+
+.tagline-cta {
+  color: var(--blue);
+}
+
+.tag-txt {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 1em;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.75em; /* 14.4px @ 1920 */
+  font-weight: 400;
+  line-height: 1;
+  color: var(--blue);
+}
+
+.cube-tag {
+  width: 0.375em;
+  height: 0.375em;
+  border-radius: 1px;
+  background-color: var(--blue);
+  margin-bottom: 1px;
+  flex-shrink: 0;
+  animation: cubeTagFlickerSmooth 1.2s ease-in-out infinite;
+  will-change: opacity, filter;
+}
+
+@keyframes cubeTagFlickerSmooth {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.35;
+    filter: brightness(1.4);
+  }
+}
+
+.heading-cta {
+  display: flex;
+  flex-flow: column;
+  row-gap: 1.25em;
+  width: 50%;
+  margin-left: auto;
+}
+
+.cta-h2 {
+  width: 9.55em; /* ≈823px @ 86.4px — matches Cantor .h2.blue 15ch block */
+  color: var(--blue);
+  font-size: 4.5em; /* 86.4px @ 1920 — Cantor .h2.blue */
+  font-weight: 500;
+  line-height: 0.9;
+}
+
+.button-wrap {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.cta-btn-blue {
+  border-radius: 0.1875em;
+  padding: 0.25em 0.25em 0.25em 1em !important;
+  font-size: 0.9em; /* 17.28px @ 1920 */
+  font-weight: 500;
+  line-height: 1;
+  gap: 0.75em !important;
+  min-height: 0;
+}
+
+.cta-btn-blue > span:first-child {
+  padding-right: 0.5em;
+}
+
+/* Cantor .arrow_button.white + .arrow_icon.blue */
+.cta-btn-blue > span:last-child {
+  background-color: #fff !important;
+  color: var(--blue) !important;
+  width: 2.2em;
+  height: 2.2em;
+  border-radius: 0.1em;
+}
+
+.paragraph-last {
+  width: 34ch;
+  margin-top: auto;
+}
+
+.cta-p {
+  color: var(--blue);
+  letter-spacing: -0.005em;
+  font-size: 0.9em; /* 17.28px @ 1920 */
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.cta-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.cta-lines-svg {
+  display: block;
+  width: calc(100% * var(--cta-line-width, 1));
+  max-width: 100%;
+  height: auto;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.cta-lines-svg .cta-cap {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: #d45d4f;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 500;
+  line-height: 1;
+}
+
+@media (max-width: 991px) {
+  .cta-box {
+    font-size: clamp(14px, 2.8vw, 18px);
+    height: auto;
+    min-height: 100vh;
+    --cta-line-width: 1.6;
+  }
+
+  .wrapper-cta {
+    padding: 4.5em 1.25rem 3.5em;
+  }
+
+  .flex-cta {
+    flex-direction: column;
+    gap: 2em;
+  }
+
+  .heading-cta {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .cta-h2 {
+    width: auto;
+    max-width: 14ch;
+    font-size: clamp(2.5rem, 9vw, 3.75rem);
+  }
+
+  .cta-lines-svg .cta-cap {
+    font-size: 14px;
+    letter-spacing: 0.07em;
+  }
+}
+
+@media (max-width: 767px) {
+  .cta-box {
+    --cta-line-width: 1;
+  }
+
+  .cta-lines {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cta-lines-svg {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    transform: scale(2);
+    transform-origin: center center;
+  }
+
+  .cta-lines-svg .cta-cap--1,
+  .cta-lines-svg .cta-cap--2,
+  .cta-lines-svg .cta-cap--3,
+  .cta-lines-svg .cta-cap--4 {
+    display: none;
+  }
+}
+
+/* Cantor8 Product Suite — sticky horizontal structures carousel */
+@media (min-width: 992px) {
+  .structures-wrapper {
+    position: relative;
+    overflow: visible;
+    min-height: 720vh;
+  }
+
+  .structures-cms {
+    position: sticky;
+    top: 0;
+  }
+
+  .structure-visual {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+  }
+}
+
+.structure-visual {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  padding: 1.5em 1.25em 0;
+}
+
+.structure-card {
+  font-size: clamp(17px, 1.25vw, 24px);
+}
+
+/* Cantor8 cutting-edge — exact type & staggered content widths */
+.cutting-edge-h2 {
+  font-size: 6rem; /* 96px — Cantor .h2 = 5em at 19.2px root */
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.txt-title {
+  font-size: 4.25rem; /* ~68px — enlarged from Cantor 53.76px */
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.p-gen-smaller {
+  font-size: 1.35rem; /* ~21.6px — enlarged from Cantor 17.28px */
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  opacity: 0.65;
+  max-width: 34rem;
+}
+
+.cube-tag {
+  width: 0.375em;
+  height: 0.375em;
+  margin-bottom: 1px;
+  border-radius: 1px;
+  background: var(--white);
+  animation: foundationCubeFlicker 1.2s ease-in-out infinite;
+}
+
+.box-align.is-first {
+  margin-left: 55%;
+}
+
+.box-align.is-second {
+  margin-top: 25em;
+  margin-left: 20%;
+}
+
+.box-align.is-third {
+  margin-top: 15em;
+  margin-left: 40%;
+}
+
+.box-align.is-fourth {
+  margin-top: 15em;
+  margin-left: 20%;
+}
+
+/* Cantor8 cutting-edge circuit flow lines — top in-flow; bottom absolute to section end */
+.cutting-edge-wrap > .flow2-wrap {
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.cutting-edge-wrap > .flow2-wrap.flow2-wrap--bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-top: 0;
+  height: 0;
+}
+
+.cutting-edge-wrap .c8-flow {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cutting-edge-wrap .c8-flow--top {
+  transform: translate(-50%, 220px);
+}
+
+.cutting-edge-wrap .c8-flow--bottom {
+  /* Anchor to bottom of section instead of top+negative margin */
+  top: auto;
+  bottom: 0;
+  transform: translate(-50%, 0);
+}
+
+.cutting-edge-wrap .c8-flow path {
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cutting-edge-wrap .c8-flow-pulse {
+  fill: none;
+  stroke: rgb(255, 255, 255);
+  stroke-opacity: 1;
+  stroke-width: 0.5;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 991px) {
+  .cutting-edge-wrap .flow2-wrap {
+    display: none;
+  }
+  .cutting-edge-h2 {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+  }
+
+  .txt-title {
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+
+  .p-gen-smaller {
+    font-size: clamp(1.05rem, 3.2vw, 1.25rem);
+  }
+
+  .box-align.is-first,
+  .box-align.is-second,
+  .box-align.is-third,
+  .box-align.is-fourth {
+    margin-left: 0;
+    margin-top: 3.5rem;
+  }
+
+  .box-align.is-first {
+    margin-top: 0;
+  }
+
+  .content-ed {
+    margin-top: 4rem !important;
+  }
+
+  .cutting-edge-wrap {
+    padding-top: 5rem !important;
+    padding-bottom: 14rem !important;
+  }
+}
+
+.surface-card {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  transition: background 180ms var(--ease-out-expo), border-color 180ms var(--ease-out-expo);
+}
+
+.surface-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.surface-card-dark {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.surface-card-light {
+  border: 1px solid rgba(21, 21, 21, 0.1);
+  background: #f5f7fb;
+  color: var(--black);
+}
+
+@utility glass {
+  background: #ffffff;
+  color: var(--black);
+  border: 1px solid rgba(21, 21, 21, 0.08);
+  box-shadow: 0 18px 50px rgba(4, 40, 100, 0.18);
+}
+
+@utility glass-strong {
+  background: #ffffff;
+  color: var(--black);
+  border: 1px solid rgba(21, 21, 21, 0.1);
+}
+
+@utility glass-nav {
+  background: color-mix(in oklab, var(--blue) 88%, black);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--white);
+}
+
+@keyframes nnk-orbit-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(6px, -8px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .cube-tag {
+    animation: none !important;
+  }
+}
+
+/* Cantor8 Footer — fluid 1vw like Cantor body */
+.footer {
+  background-color: var(--black);
+  width: 100%;
+  height: auto;
+  font-size: 1vw; /* 19.2px @ 1920 */
+  color: var(--white);
+}
+
+.wrapper-footer {
+  padding: 4.5em 1.75rem 1.5em;
+}
+
+.flex-footer {
+  display: flex;
+}
+
+.subscribe-newsletter {
+  width: 35%;
+}
+
+.form-subscribe {
+  display: flex;
+  flex-flow: column;
+  gap: 1.125em 0;
+}
+
+.title-subscribe {
+  font-size: 2em; /* 38.4px @ 1920 */
+  font-weight: 400;
+  line-height: 0.9;
+  color: var(--white);
+}
+
+.subscribe-form {
+  display: flex;
+  column-gap: 0.75em;
+  align-items: stretch;
+}
+
+.input-field {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 3.12em;
+  color: var(--white);
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0.25em;
+  margin-bottom: 0;
+  padding: 0.5em 1em;
+  font-size: 0.85em; /* 16.32px */
+  font-weight: 500;
+  transition: border-color 0.4s;
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.input-field:hover,
+.input-field:focus,
+.input-field:focus-visible {
+  border-color: rgba(255, 255, 255, 0.65);
+  color: var(--white);
+}
+
+.subscribe-button {
+  flex-shrink: 0;
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 0.25em;
+  height: 3.12em;
+  padding: 0.75em 2.5em;
+  font-size: 0.85em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+
+.subscribe-button:hover {
+  background-color: #033a8c;
+}
+
+.thanks-footer {
+  letter-spacing: 0.01em;
+  font-size: 0.9em;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 5em 6em;
+  width: 50%;
+  margin-left: auto;
+}
+
+.menu-box {
+  display: flex;
+  flex-flow: column;
+  row-gap: 0.5em;
+}
+
+.title-menu {
+  opacity: 0.65;
+  font-size: 0.9em; /* 17.28px */
+  font-weight: 500;
+  line-height: 1;
+  color: var(--white);
+}
+
+.list-links {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: 0.25em;
+}
+
+.footer-link {
+  color: var(--white);
+  letter-spacing: 0;
+  font-size: 0.9em; /* 17.28px */
+  line-height: 1.3;
+  text-decoration: none;
+  transition: color 0.4s;
+}
+
+.footer-link:hover {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.last-line {
+  margin-top: 20em;
+  display: flex;
+}
+
+.flex-last {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 35%;
+}
+
+.logo-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  width: 18em;
+  text-decoration: none;
+  color: var(--white);
+}
+
+.logo-footer-mark {
+  display: block;
+  width: 2.875em;
+  height: 2.875em;
+  flex-shrink: 0;
+}
+
+.logo-footer-word {
+  font-size: 2.85em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.caption-box {
+  opacity: 0.45;
+  font-size: 0.9em;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--white);
+}
+
+.pp-et {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 50%;
+  margin-left: auto;
+}
+
+.last-pp {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: 0.375em;
+}
+
+.footer-last-link {
+  opacity: 0.45;
+  color: var(--white);
+  font-size: 0.9em;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  transition: opacity 0.4s;
+}
+
+.footer-last-link:hover {
+  opacity: 0.8;
+}
+
+.caption-desktop {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35em 1em;
+  opacity: 1;
+  text-align: right;
+}
+
+.all-rights {
+  opacity: 0.45;
+  font-size: 0.9em;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--white);
+}
+
+@media (max-width: 991px) {
+  .footer {
+    font-size: clamp(14px, 2.8vw, 18px);
+  }
+
+  .flex-footer {
+    flex-direction: column;
+    gap: 3.5em;
+  }
+
+  .subscribe-newsletter,
+  .menu-grid,
+  .flex-last,
+  .pp-et {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .menu-grid {
+    gap: 2.5em 2em;
+  }
+
+  .last-line {
+    margin-top: 6em;
+    flex-direction: column;
+    gap: 2.5em;
+  }
+
+  .flex-last {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25em;
+  }
+
+  .pp-et {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5em;
+  }
+
+  .caption-desktop {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .logo-footer {
+    width: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+    gap: 2em;
+  }
+
+  .subscribe-form {
+    flex-direction: column;
+  }
+
+  .subscribe-button {
+    width: 100%;
+  }
+}
