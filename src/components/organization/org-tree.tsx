@@ -1,7 +1,6 @@
 "use client";
 
 import { UserRound } from "lucide-react";
-import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import type { OrgNode } from "@/lib/content/organogram";
 import { orgPath } from "@/lib/content/organogram";
@@ -14,18 +13,21 @@ function NodeCard({
   active,
   onPath,
   compact,
+  onSelect,
 }: {
   node: OrgNode;
   active: boolean;
   onPath: boolean;
   compact: boolean;
+  onSelect: (id: string) => void;
 }) {
   const showPhoto = Boolean(node.image) || node.portrait;
 
   return (
-    <Link
-      href={`/organization/${node.id}`}
-      aria-current={active ? "page" : undefined}
+    <button
+      type="button"
+      onClick={() => onSelect(node.id)}
+      aria-current={active ? "true" : undefined}
       className={cn(
         "block max-w-full cursor-pointer overflow-hidden rounded-md border-2 text-center transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1d4f91]",
         compact ? "w-[7.25rem]" : "w-[11.5rem]",
@@ -80,7 +82,7 @@ function NodeCard({
       ) : (
         <span className="block h-3" />
       )}
-    </Link>
+    </button>
   );
 }
 
@@ -89,18 +91,26 @@ function Branch({
   activeId,
   path,
   compact,
+  onSelect,
 }: {
   node: OrgNode;
   activeId?: string;
   path: string[];
   compact: boolean;
+  onSelect: (id: string) => void;
 }) {
   const children = node.children ?? [];
   const onPath = path.includes(node.id);
 
   return (
     <div className="org-branch flex w-max flex-col items-center">
-      <NodeCard node={node} active={node.id === activeId} onPath={onPath && node.id !== activeId} compact={compact} />
+      <NodeCard
+        node={node}
+        active={node.id === activeId}
+        onPath={onPath && node.id !== activeId}
+        compact={compact}
+        onSelect={onSelect}
+      />
       {children.length > 0 ? (
         <div className="org-children flex w-max flex-col items-center">
           <span
@@ -110,7 +120,7 @@ function Branch({
           <div className="org-row org-row-line">
             {children.map((child) => (
               <div key={child.id} className="org-slot">
-                <Branch node={child} activeId={activeId} path={path} compact={compact} />
+                <Branch node={child} activeId={activeId} path={path} compact={compact} onSelect={onSelect} />
               </div>
             ))}
           </div>
@@ -124,10 +134,12 @@ export function OrgTree({
   root,
   activeId,
   compact = false,
+  onSelect,
 }: {
   root: OrgNode;
   activeId?: string;
   compact?: boolean;
+  onSelect: (id: string) => void;
 }) {
   const frameRef = useRef<HTMLDivElement>(null);
   const treeRef = useRef<HTMLDivElement>(null);
@@ -163,7 +175,7 @@ export function OrgTree({
         style={{ zoom }}
         aria-label="Οργανόγραμμα Ναυτικού Νοσοκομείου Κρήτης"
       >
-        <Branch node={root} activeId={activeId} path={path} compact={compact} />
+        <Branch node={root} activeId={activeId} path={path} compact={compact} onSelect={onSelect} />
       </div>
     </div>
   );

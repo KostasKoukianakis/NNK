@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { OrgTree } from "@/components/organization/org-tree";
+import { OrgBoard } from "@/components/organization/org-board";
 import { StringsNet } from "@/components/visual/strings-net";
 import { buildOrganogram } from "@/lib/content/organogram";
 
@@ -28,11 +28,11 @@ export default function OrganizationPage() {
       <h1 className="mt-3 text-5xl">Οργανόγραμμα</h1>
       <p className="mt-4 max-w-2xl text-lg text-white/80">
         Διευθυντής, υποδιευθυντής και διευθύνσεις του νοσοκομείου. Πάτησε μια κάρτα
-        για να ανοίξεις τη θέση και να περάσεις σε άλλο στέλεχος από το δέντρο.
+        και το προφίλ αλλάζει δίπλα, στην ίδια σελίδα.
       </p>
 
-      <div className="mt-10 overflow-x-clip rounded-2xl bg-[#f3f6fb] px-3 py-8 sm:px-6">
-        <OrgTree root={tree} />
+      <div className="mt-10">
+        <OrgBoard root={tree} />
       </div>
 
       <section className="mt-16 border-t border-white/15 pt-10">
