@@ -74,6 +74,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const emergency = HOSPITAL.phones.emergency[0];
   const organosi = MENU.find((item) => item.slug === "organosi");
   const isHome = pathname === "/";
@@ -83,8 +84,15 @@ export function SiteHeader() {
     setMenuOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className={cn("site-chrome z-40 text-white", isHome ? "absolute inset-x-0 top-0" : "sticky top-0")}>
+    <header className={cn("site-chrome z-40 text-white", isHome ? "fixed inset-x-0 top-0" : "sticky top-0")}>
       {!isHome ? (
         <div className="border-b border-white/10 bg-[var(--blue)]/70 backdrop-blur-md">
           <div className={cn(PAGE_WIDTH, "flex flex-wrap items-center justify-between gap-2 py-[0.5em] text-[0.7em]")}>
@@ -101,7 +109,13 @@ export function SiteHeader() {
         </div>
       ) : null}
 
-      <div className={cn("relative", !isHome && "bg-[var(--blue)]/50 backdrop-blur-md")}>
+      <div
+        className={cn(
+          "relative transition-[background-color,backdrop-filter] duration-200",
+          !isHome && "bg-[var(--blue)]/50 backdrop-blur-md",
+          isHome && (scrolled || mobileOpen || menuOpen) && "bg-[var(--blue)]/85 backdrop-blur-md",
+        )}
+      >
         <div
           className={cn(
             FULL_BLEED,
