@@ -1,80 +1,79 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageShell } from "@/components/ui/glass";
+import { OrgTree, type OrgNode } from "@/components/organization/org-tree";
+import { MENU, type MenuNode } from "@/lib/content/site-map";
 
 export const metadata: Metadata = {
-  title: "Οργάνωση",
+  title: "Οργανόγραμμα",
 };
 
-const SECTORS = [
-  {
-    title: "Χειρουργικός τομέας",
-    items: [
-      "Αναισθησιολογικό τμήμα και ανάνηψη",
-      "Χειρουργείο και αποστείρωση",
-      "Κλινική γενικής χειρουργικής",
-      "Ορθοπεδική κλινική",
-      "ΩΡΛ κλινική",
-      "Οφθαλμολογική κλινική",
-      "Κλινική πλαστικής χειρουργικής",
-      "Ουρολογική κλινική",
+const INFRASTRUCTURE = [
+  "Μικτή νοσηλευτική πτέρυγα 54 κλινών, από τις οποίες 9 για λοιμώδη νοσήματα.",
+  "Χειρουργείο με δύο αίθουσες.",
+  "Ιατρείο επειγόντων περιστατικών, 24 ώρες.",
+  "Υπερβαρική ιατρική σε 24ωρη βάση για τον νότιο ελλαδικό χώρο, και παραπομπές κατόπιν έγκρισης ΓΕΝ.",
+  "Ακτινολογικό εργαστήριο: ένα σταθερό μηχάνημα, δύο φορητά και ένας υπερηχογράφος.",
+  "Δύο ασθενοφόρα, κινητές μονάδες.",
+] as const;
+
+function fromMenu(node: MenuNode): OrgNode {
+  const children = node.children.map(fromMenu);
+  return {
+    id: node.path.join("/"),
+    title: node.title,
+    href: node.url,
+    children: children.length > 0 ? children : undefined,
+  };
+}
+
+function buildTree(): OrgNode {
+  const organosi = MENU.find((item) => item.slug === "organosi");
+  return {
+    id: "nnk",
+    title: "Ναυτικό Νοσοκομείο Κρήτης",
+    subtitle: "Σούδα, Χανιά",
+    children: [
+      {
+        id: "dioikitis",
+        title: "Διοικητής",
+        subtitle: "Υπάγεται στον Αρχηγό ΓΕΝ",
+        children: organosi?.children.map(fromMenu) ?? [],
+      },
     ],
-  },
-  {
-    title: "Παθολογικός τομέας",
-    items: [
-      "Παθολογική κλινική",
-      "Καρδιολογική κλινική",
-      "Ψυχιατρική κλινική",
-      "Δερματολογική κλινική",
-      "Πνευμονολογικό ιατρείο",
-      "Γαστρεντερολογικό ιατρείο",
-      "Τμήμα καταδυτικής και υπερβαρικής ιατρικής",
-    ],
-  },
-  {
-    title: "Εργαστηριακός τομέας",
-    items: ["Ακτινολογικό τμήμα και υπέρηχοι", "Βιοπαθολογικό τμήμα"],
-  },
-  {
-    title: "Οδοντιατρικός τομέας",
-    items: ["Τμήμα γενικής οδοντιατρικής"],
-  },
-];
+  };
+}
 
 export default function OrganizationPage() {
+  const tree = buildTree();
+
   return (
-    <PageShell wide>
-      <h1 className="text-5xl">Οργάνωση</h1>
-      <p className="mt-4 max-w-prose text-lg">
-        Οι κλινικές έχουν την ευθύνη διάγνωσης και θεραπείας των νοσηλευομένων. Τα τμήματα εξυπηρετούν νοσηλευόμενους και εξωτερικούς ασθενείς. Οργανώνονται σε τέσσερις τομείς.
+    <div className="mx-auto w-full max-w-[92rem] px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
+      <p className="font-mono text-xs uppercase tracking-[0.08em] text-white/55">Οργάνωση</p>
+      <h1 className="mt-3 text-5xl">Οργανόγραμμα</h1>
+      <p className="mt-4 max-w-2xl text-lg text-white/80">
+        Η δομή του νοσοκομείου, από τον διοικητή προς τις διευθύνσεις. Η οργάνωση κάθε
+        διεύθυνσης ανοίγει με κλικ στο εικονίδιο.
       </p>
-      <div className="mt-10 grid gap-8 lg:grid-cols-2">
-        {SECTORS.map((sector) => (
-          <section key={sector.title}>
-            <h2 className="text-2xl">{sector.title}</h2>
-            <ul className="mt-3 list-disc space-y-1 pl-5">
-              {sector.items.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </section>
-        ))}
+
+      <div className="mt-10 overflow-x-auto pb-2">
+        <OrgTree root={tree} />
       </div>
-      <h2 className="mt-12 text-3xl">Υποδομή</h2>
-      <ul className="mt-4 grid gap-3 lg:grid-cols-2">
-        <li className="rounded-2xl bg-white/30 p-4">Μικτή νοσηλευτική πτέρυγα 54 κλινών, από τις οποίες 9 για λοιμώδη νοσήματα.</li>
-        <li className="rounded-2xl bg-white/30 p-4">Χειρουργείο με δύο αίθουσες.</li>
-        <li className="rounded-2xl bg-white/30 p-4">Ιατρείο επειγόντων περιστατικών, 24 ώρες.</li>
-        <li className="rounded-2xl bg-white/30 p-4">Υπερβαρική ιατρική σε 24ωρη βάση για τον νότιο ελλαδικό χώρο, και παραπομπές κατόπιν έγκρισης ΓΕΝ.</li>
-        <li className="rounded-2xl bg-white/30 p-4">Ακτινολογικό εργαστήριο: ένα σταθερό μηχάνημα, δύο φορητά και ένας υπερηχογράφος.</li>
-        <li className="rounded-2xl bg-white/30 p-4">Δύο ασθενοφόρα, κινητές μονάδες.</li>
-      </ul>
-      <p className="mt-8">
-        <Link className="font-semibold underline-offset-4 hover:underline" href="/departments">
-          Αναλυτικές κλινικές
-        </Link>
-      </p>
-    </PageShell>
+
+      <section className="mt-16 border-t border-white/15 pt-10">
+        <h2 className="text-3xl">Υποδομή</h2>
+        <ul className="mt-6 grid gap-3 lg:grid-cols-2">
+          {INFRASTRUCTURE.map((item) => (
+            <li key={item} className="rounded-2xl bg-white/10 p-4 text-white/90">
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-8">
+          <Link className="font-semibold underline-offset-4 hover:underline" href="/departments">
+            Αναλυτικές κλινικές
+          </Link>
+        </p>
+      </section>
+    </div>
   );
 }

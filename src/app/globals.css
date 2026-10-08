@@ -1172,3 +1172,89 @@ p {
     width: 100%;
   }
 }
+
+/* Organizational chart — top-down biological tree */
+.org-tree,
+.org-tree ul {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.org-tree {
+  width: max-content;
+  min-width: 100%;
+  padding: 0.5rem 0 1.5rem;
+}
+
+.org-tree ul {
+  position: relative;
+  padding-top: 1.35rem;
+}
+
+.org-tree ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 1.35rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.org-tree li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.35rem 0.55rem 0;
+}
+
+.org-tree > li {
+  padding-top: 0;
+}
+
+.org-tree li::before,
+.org-tree li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 1.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.org-tree li::before {
+  right: 50%;
+}
+
+.org-tree li::after {
+  left: 50%;
+  border-left: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.org-tree li:only-child {
+  padding-top: 0;
+}
+
+.org-tree li:only-child::before,
+.org-tree li:only-child::after {
+  display: none;
+}
+
+.org-tree li:first-child::before,
+.org-tree li:last-child::after {
+  border: 0 none;
+}
+
+.org-tree li:last-child::before {
+  border-top: 1px solid rgba(255, 255, 255, 0.72);
+  border-right: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.org-tree > li::before,
+.org-tree > li::after {
+  display: none;
+}

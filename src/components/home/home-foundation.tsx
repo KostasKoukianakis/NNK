@@ -249,10 +249,7 @@ export function HomeFoundation() {
             </ul>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <CtaLink href="/mission" size="lg" className="min-h-[3.25rem] text-lg">
-                Αναλυτική αποστολή
-              </CtaLink>
-              <CtaLink href="/organization" size="lg" variant="outline" className="min-h-[3.25rem] text-lg">
+              <CtaLink href="/organization" size="lg" className="min-h-[3.25rem] text-lg">
                 Οργανόγραμμα
               </CtaLink>
             </div>
