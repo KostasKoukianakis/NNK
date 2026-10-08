@@ -1173,3 +1173,83 @@ p {
   }
 }
 
+/* Organogram: branching tree that stays inside the viewport */
+.org-chart {
+  overflow-x: clip;
+}
+
+.org-row {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem 0.45rem;
+}
+
+.org-slot {
+  display: flex;
+  width: 10.25rem;
+  max-width: calc(50% - 0.45rem);
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 720px) {
+  .org-slot {
+    max-width: 10.25rem;
+  }
+}
+
+.org-row-line {
+  flex-wrap: nowrap;
+  gap: 0;
+  justify-content: center;
+}
+
+.org-row-line > .org-slot {
+  position: relative;
+  width: 10.25rem;
+  max-width: none;
+  flex: 0 0 auto;
+  padding: 1.15rem 0.35rem 0;
+}
+
+.org-row-line > .org-slot::before,
+.org-row-line > .org-slot::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 1.15rem;
+  border-top: 1px solid #1d4f91;
+}
+
+.org-row-line > .org-slot::before {
+  right: 50%;
+}
+
+.org-row-line > .org-slot::after {
+  left: 50%;
+  border-left: 1px solid #1d4f91;
+}
+
+.org-row-line > .org-slot:only-child {
+  padding-top: 0;
+}
+
+.org-row-line > .org-slot:only-child::before,
+.org-row-line > .org-slot:only-child::after {
+  display: none;
+}
+
+.org-row-line > .org-slot:first-child::before,
+.org-row-line > .org-slot:last-child::after {
+  border: 0 none;
+}
+
+.org-row-line > .org-slot:last-child::before {
+  border-top: 1px solid #1d4f91;
+  border-right: 1px solid #1d4f91;
+}
+

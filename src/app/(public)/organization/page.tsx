@@ -20,7 +20,7 @@ export default function OrganizationPage() {
   const tree = buildOrganogram();
 
   return (
-    <div className="mx-auto w-full max-w-[92rem] px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
+    <div className="mx-auto w-full max-w-[92rem] overflow-x-clip px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
       <p className="font-mono text-xs uppercase tracking-[0.08em] text-white/55">Οργάνωση</p>
       <h1 className="mt-3 text-5xl">Οργανόγραμμα</h1>
       <p className="mt-4 max-w-2xl text-lg text-white/80">
@@ -28,7 +28,7 @@ export default function OrganizationPage() {
         μόνο προς τα κάτω.
       </p>
 
-      <div className="mt-10 rounded-2xl bg-[#f3f6fb] px-4 py-10 sm:px-8">
+      <div className="mt-10 overflow-x-clip rounded-2xl bg-[#f3f6fb] px-3 py-8 sm:px-6">
         <OrgTree root={tree} />
       </div>
 
